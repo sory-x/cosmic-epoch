@@ -1,0 +1,15 @@
+fonts/fira/
+fonts/roboto-slab/
+fonts/src/
+fonts/*.png
+
+# Build artifacts
+target/
+vendor/
+build/
+**/target/
+**/vendor/
+result/
+*.log
+.cargo
+.vscode

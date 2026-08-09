@@ -1,0 +1,24 @@
+Source: soryos-launcher
+Section: utils
+Priority: optional
+Maintainer: SoryOS Team <maintainers@soryos.local>
+Build-Depends:
+    cargo,
+    debhelper-compat (=10),
+    just,
+    pkg-config,
+    rustc (>=1.65),
+    libxkbcommon-dev,
+    libegl-dev,
+Standards-Version: 4.6.2
+Homepage: https://github.com/sory-x/soryos
+
+Package: soryos-launcher
+Architecture: amd64 arm64
+Depends: qalc, fd-find, ${misc:Depends}, ${shlibs:Depends}
+Description: SoryOS IPC-based desktop launcher service
+
+Package: soryos-launcher-system76-power
+Architecture: all
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: System76 Power scripts for the launcher
