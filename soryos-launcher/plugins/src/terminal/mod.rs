@@ -3,7 +3,7 @@
 
 use freedesktop_desktop_entry::get_languages_from_env;
 use futures::prelude::*;
-use pop_launcher::*;
+use soryos_launcher::*;
 use std::path::PathBuf;
 
 pub struct App {

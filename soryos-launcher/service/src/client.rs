@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MPL-2.0
 
 use futures::{Stream, StreamExt};
-use pop_launcher::{Request, Response};
+use soryos_launcher::{Request, Response};
 use std::io;
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt};
 use tokio::process;
@@ -18,7 +18,7 @@ pub struct IpcClient {
 
 impl IpcClient {
     pub fn new_with_args(args: Args) -> io::Result<(Self, impl Stream<Item = Response>)> {
-        let mut child = process::Command::new("pop-launcher")
+        let mut child = process::Command::new("soryos-launcher")
             .args(&[
                 "--max-open",
                 args.max_open.to_string().as_str(),

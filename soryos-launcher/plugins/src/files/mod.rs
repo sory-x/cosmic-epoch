@@ -2,7 +2,7 @@
 // Copyright © 2021 System76
 
 use futures::prelude::*;
-use pop_launcher::*;
+use soryos_launcher::*;
 use std::{collections::BTreeMap, path::PathBuf};
 
 #[derive(Clone)]

@@ -10,7 +10,7 @@ use futures::StreamExt;
 use reqwest::Client;
 use url::Url;
 
-use pop_launcher::*;
+use soryos_launcher::*;
 
 pub use config::{Config, Definition, load};
 use regex::Regex;
@@ -53,11 +53,11 @@ const ALLOWED_FAVICON_MIME: [&str; 5] = [
 impl Default for App {
     fn default() -> Self {
         let cache = dirs::home_dir()
-            .map(|cache| cache.join(".cache/pop-launcher"))
+            .map(|cache| cache.join(".cache/soryos-launcher"))
             .expect("no home dir");
 
         if !cache.exists() {
-            std::fs::create_dir(&cache).expect("unable to create $HOME/.cache/pop-launcher")
+            std::fs::create_dir(&cache).expect("unable to create $HOME/.cache/soryos-launcher")
         }
 
         Self {
@@ -179,7 +179,7 @@ impl App {
 
             match result {
                 Some(icon) => {
-                    // Ensure we recreate the pop-launcher cache dir if it was removed at runtime
+                    // Ensure we recreate the soryos-launcher cache dir if it was removed at runtime
                     let cache_dir = favicon_path.parent().unwrap();
                     if !cache_dir.exists() {
                         std::fs::create_dir_all(cache_dir).expect("error creating cache directory");

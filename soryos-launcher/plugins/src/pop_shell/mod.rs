@@ -4,7 +4,7 @@
 use crate::*;
 use freedesktop_desktop_entry::{self as fde, get_languages_from_env};
 use futures::StreamExt;
-use pop_launcher::*;
+use soryos_launcher::*;
 use serde::{Deserialize, Serialize};
 use std::{fs, path::PathBuf};
 use tokio::io::{AsyncWrite, AsyncWriteExt};

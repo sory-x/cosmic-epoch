@@ -15,7 +15,7 @@ use futures::{
     channel::mpsc,
     future::{Either, select},
 };
-use pop_launcher::{
+use soryos_launcher::{
     IconSource, PluginResponse, PluginSearchResult, Request, async_stdin, async_stdout,
     json_input_stream,
 };

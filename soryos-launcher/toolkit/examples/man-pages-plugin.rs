@@ -2,14 +2,14 @@
 // Copyright © 2021 System76
 
 use fork::{Fork, daemon};
-use pop_launcher::{Indice, PluginResponse, PluginSearchResult};
-use pop_launcher_toolkit::plugin_trait::{PluginExt, async_trait};
+use soryos_launcher::{Indice, PluginResponse, PluginSearchResult};
+use soryos_launcher_toolkit::plugin_trait::{PluginExt, async_trait};
 use std::io;
 use std::os::unix::process::CommandExt;
 use std::path::PathBuf;
 use std::process::{Command, exit};
 
-// This example demonstrate how to write a pop-launcher plugin using the `PluginExt` helper trait.
+// This example demonstrate how to write a soryos-launcher plugin using the `PluginExt` helper trait.
 // We are going to build a plugin to display man pages descriptions and open them on activation.
 // To do that we will use `whatis`, a command that searches the manual page names and displays their descriptions.
 
@@ -64,20 +64,20 @@ pub struct WhatIsPlugin {
     entries: Vec<(String, String)>,
 }
 
-// This is the main part of our plugin, defining how it will react to pop-launcher requests.
+// This is the main part of our plugin, defining how it will react to soryos-launcher requests.
 #[async_trait]
 impl PluginExt for WhatIsPlugin {
     // Define the name of our plugin, this is mainly used to write log
-    // emitted by tracing macros to `$HOME/.local/state/pop-launcher/wathis.log.
+    // emitted by tracing macros to `$HOME/.local/state/soryos-launcher/wathis.log.
     fn name(&self) -> &str {
         "whatis"
     }
 
-    // Define how the plugin will react to pop-launcher search requests.
+    // Define how the plugin will react to soryos-launcher search requests.
     // Note that we need to send `PluginResponse::Finished` once we are done,
-    // otherwise pop-launcher will not display our search results and wait forever.
+    // otherwise soryos-launcher will not display our search results and wait forever.
     async fn search(&mut self, query: &str) {
-        // pop-launcher will only dispatch query matching the regex defined in our `plugin.ron`
+        // soryos-launcher will only dispatch query matching the regex defined in our `plugin.ron`
         // file, can safely strip it out.
         let query = query.strip_prefix("whatis ");
 
@@ -106,11 +106,11 @@ impl PluginExt for WhatIsPlugin {
             }
         }
 
-        // Tell pop-launcher we are done with this search request.
+        // Tell soryos-launcher we are done with this search request.
         self.respond_with(PluginResponse::Finished).await;
     }
 
-    // pop-launcher is asking for an entry activation.
+    // soryos-launcher is asking for an entry activation.
     async fn activate(&mut self, id: Indice) {
         // First we try to find the requested entry in the plugin struct
         if let Some((command, _description)) = self.entries.get(id as usize) {

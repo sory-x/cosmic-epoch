@@ -18,7 +18,7 @@ use crate::recent::RecentUseStorage;
 use clap::Parser;
 use flume::{Receiver, Sender};
 use futures::{SinkExt, Stream, StreamExt, future};
-use pop_launcher::{
+use soryos_launcher::{
     ContextOption, IconSource, Indice, PluginResponse, PluginSearchResult, Request, Response,
     SearchResult, json_input_stream, plugin_paths,
 };
@@ -77,7 +77,7 @@ pub struct PluginHelp {
 pub fn ensure_cache_path() -> Result<PathBuf, Box<dyn std::error::Error>> {
     let cachepath = dirs::home_dir()
         .ok_or("failed to find home dir")?
-        .join(".cache/pop-launcher");
+        .join(".cache/soryos-launcher");
     std::fs::create_dir_all(&cachepath)?;
     Ok(cachepath.join("recent"))
 }
@@ -714,7 +714,7 @@ fn calculate_weight(meta: &PluginSearchResult, query: &str) -> f64 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use pop_launcher::PluginSearchResult;
+    use soryos_launcher::PluginSearchResult;
 
     #[test]
     fn test_script_calculate_weight() {

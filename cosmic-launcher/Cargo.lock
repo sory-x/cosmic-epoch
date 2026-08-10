@@ -1180,8 +1180,8 @@ dependencies = [
  "i18n-embed-fl",
  "libcosmic",
  "nix",
- "pop-launcher",
- "pop-launcher-service",
+ "soryos-launcher",
+ "soryos-launcher-service",
  "rust-embed",
  "serde",
  "serde_json",
@@ -4351,7 +4351,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2f3a9f18d041e6d0e102a0a46750538147e5e8992d3b4873aaafee2520b00ce3"
 
 [[package]]
-name = "pop-launcher"
+name = "soryos-launcher"
 version = "1.2.7"
 dependencies = [
  "const_format",
@@ -4365,7 +4365,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "pop-launcher-service"
+name = "soryos-launcher-service"
 version = "1.2.7"
 dependencies = [
  "async-oneshot",
@@ -4376,7 +4376,7 @@ dependencies = [
  "futures",
  "gen-z",
  "num_cpus",
- "pop-launcher",
+ "soryos-launcher",
  "regex",
  "ron 0.11.0",
  "serde",

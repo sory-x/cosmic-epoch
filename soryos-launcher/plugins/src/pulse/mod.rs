@@ -3,7 +3,7 @@
 
 use async_pidfd::AsyncPidFd;
 use futures::prelude::*;
-use pop_launcher::*;
+use soryos_launcher::*;
 use std::io;
 
 struct Selection {

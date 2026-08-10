@@ -1,10 +1,10 @@
 [package]
-name = "pop-launcher"
+name = "soryos-launcher"
 version = "1.2.7"
 license = "MPL-2.0"
 authors = ["Michael Aaron Murphy <michael@mmurphy.dev>"]
-description = "Library for writing plugins and frontends for pop-launcher"
-repository = "https://github.com/pop-os/launcher"
+description = "Library for writing plugins and frontends for soryos-launcher"
+repository = "https://gitlab.com/sory-os/cosmic-epoch"
 edition = { workspace = true }
 
 [workspace]

@@ -1,5 +1,5 @@
 [package]
-name = "pop-launcher-service"
+name = "soryos-launcher-service"
 version = "1.2.7"
 license = "MPL-2.0"
 edition = { workspace = true }
@@ -12,7 +12,7 @@ dirs = { workspace = true }
 futures = { workspace = true }
 gen-z = "0.1.0"
 num_cpus = "1.17.0"
-pop-launcher = { path = "../" }
+soryos-launcher = { path = "../" }
 regex = { workspace = true }
 ron = { workspace = true }
 serde = { workspace = true }

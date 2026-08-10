@@ -1,0 +1,11 @@
+/usr/bin/soryos-launcher /usr/lib/soryos-launcher/plugins/calc/calc
+/usr/bin/soryos-launcher /usr/lib/soryos-launcher/plugins/desktop_entries/desktop-entries
+/usr/bin/soryos-launcher /usr/lib/soryos-launcher/plugins/files/files
+/usr/bin/soryos-launcher /usr/lib/soryos-launcher/plugins/find/find
+/usr/bin/soryos-launcher /usr/lib/soryos-launcher/plugins/pop_shell/pop-shell
+/usr/bin/soryos-launcher /usr/lib/soryos-launcher/plugins/pulse/pulse
+/usr/bin/soryos-launcher /usr/lib/soryos-launcher/plugins/recent/recent
+/usr/bin/soryos-launcher /usr/lib/soryos-launcher/plugins/scripts/scripts
+/usr/bin/soryos-launcher /usr/lib/soryos-launcher/plugins/terminal/terminal
+/usr/bin/soryos-launcher /usr/lib/soryos-launcher/plugins/web/web
+/usr/bin/soryos-launcher /usr/lib/soryos-launcher/plugins/cosmic_toplevel/cosmic-toplevel

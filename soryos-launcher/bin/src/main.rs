@@ -1,8 +1,8 @@
 // Copyright 2021 System76 <info@system76.com>
 // SPDX-License-Identifier: MPL-2.0
 
-use pop_launcher_toolkit::plugins;
-use pop_launcher_toolkit::service;
+use soryos_launcher_toolkit::plugins;
+use soryos_launcher_toolkit::service;
 
 use mimalloc::MiMalloc;
 use tracing::info;
@@ -25,7 +25,7 @@ async fn main() {
             "desktop-entries" => plugins::desktop_entries::main().await,
             "find" => plugins::find::main().await,
             "files" => plugins::files::main().await,
-            "pop-launcher" => service::main().await,
+            "soryos-launcher" => service::main().await,
             "pop-shell" => plugins::pop_shell::main().await,
             "pulse" => plugins::pulse::main().await,
             "recent" => plugins::recent::main().await,
@@ -45,10 +45,10 @@ fn init_logging(cmd: &str) {
     use tracing_subscriber::{EnvFilter, fmt};
 
     let logdir = match dirs::state_dir() {
-        Some(dir) => dir.join("pop-launcher/"),
+        Some(dir) => dir.join("soryos-launcher/"),
         None => dirs::home_dir()
             .expect("home directory required")
-            .join(".cache/pop-launcher"),
+            .join(".cache/soryos-launcher"),
     };
 
     let _ = std::fs::create_dir_all(&logdir);

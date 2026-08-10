@@ -1,10 +1,10 @@
-# Pop Launcher
+# SoryOS Launcher
 
 ![](https://img.shields.io/badge/rustc-1.51-orange)
 
-Modular IPC-based desktop launcher service, written in Rust. Desktop launchers may interface with this service via spawning the pop-launcher process and communicating to it via JSON IPC over the stdin and stdout pipes. The launcher service will also spawn plugins found in plugin directories on demand, based on the queries sent to the service.
+Modular IPC-based desktop launcher service, written in Rust. Desktop launchers may interface with this service via spawning the soryos-launcher process and communicating to it via JSON IPC over the stdin and stdout pipes. The launcher service will also spawn plugins found in plugin directories on demand, based on the queries sent to the service.
 
-Using IPC enables each plugin to isolate their data from other plugin processes and frontends that are interacting with them. If a plugin crashes, the launcher will continue functioning normally, gracefully cleaning up after the crashed process. Frontends and plugins may also be written in any language. The pop-launcher will do its part to schedule the execution of these plugins in parallel, on demand.
+Using IPC enables each plugin to isolate their data from other plugin processes and frontends that are interacting with them. If a plugin crashes, the launcher will continue functioning normally, gracefully cleaning up after the crashed process. Frontends and plugins may also be written in any language. The soryos-launcher will do its part to schedule the execution of these plugins in parallel, on demand.
 
 ## Installation
 
@@ -13,7 +13,7 @@ Requires the following dependencies:
 - [Just](https://github.com/casey/just)
 - [Rust/Cargo](https://www.rust-lang.org/)
 
-And then must be used with a compatible pop-launcher frontend
+And then must be used with a compatible soryos-launcher frontend
 
 - [pop-shell](https://github.com/pop-os/shell/)
 - [cosmic-launcher](https://github.com/pop-os/cosmic-launcher)
@@ -43,13 +43,13 @@ just plugins="calc desktop_entries files find pop_shell pulse recent scripts ter
 
 ## Plugin Directories
 
-- User-local plugins: `~/.local/share/pop-launcher/plugins/{plugin}/`
-- System-wide install for system administrators: `/etc/pop-launcher/plugins/{plugin}/`
-- Distribution packaging: `/usr/lib/pop-launcher/plugins/{plugin}/`
+- User-local plugins: `~/.local/share/soryos-launcher/plugins/{plugin}/`
+- System-wide install for system administrators: `/etc/soryos-launcher/plugins/{plugin}/`
+- Distribution packaging: `/usr/lib/soryos-launcher/plugins/{plugin}/`
 
 ## Plugin Config
 
-A plugin's metadata is defined `pop-launcher/plugins/{plugin}/plugin.ron`.
+A plugin's metadata is defined `soryos-launcher/plugins/{plugin}/plugin.ron`.
 
 ```ron
 (
@@ -77,9 +77,9 @@ A plugin's metadata is defined `pop-launcher/plugins/{plugin}/plugin.ron`.
 
 ## Script Directories
 
-- User-local scripts: `~/.local/share/pop-launcher/scripts`
-- System-wide install for system administrators: `/etc/pop-launcher/scripts`
-- Distribution packaging: `/usr/lib/pop-launcher/scripts`
+- User-local scripts: `~/.local/share/soryos-launcher/scripts`
+- System-wide install for system administrators: `/etc/soryos-launcher/scripts`
+- Distribution packaging: `/usr/lib/soryos-launcher/scripts`
 
 Example script
 <details>
@@ -100,7 +100,7 @@ nmcli connection up "vpn-name"
 Available for the launcher itself and all plugins, logging is implemented with the [tracing](https://docs.rs/tracing/latest/tracing/) crate. It has been pre-configured and re-exported as part of this crate. The standard **info!**, **warn!**, **error!**, and **debug!** macros can be used, after this use statement:
 
 ```rust
-use pop_launcher_toolkit::plugin_trait::tracing::*;
+use soryos_launcher_toolkit::plugin_trait::tracing::*;
 ```
 
 Per-plugin, a log file will be created in this directory: `~/.local/state/`
@@ -109,7 +109,7 @@ Per-plugin, a log file will be created in this directory: `~/.local/state/`
 <summary>Example log file paths:</summary>
 
 ```bash
-~/.local/state/pop-launcher.log
+~/.local/state/soryos-launcher.log
                your-plugin.log
                ...
 ```
@@ -120,19 +120,19 @@ The log level of the launcher and all its plugins (official and community) can b
 
 ## JSON IPC
 
-Whether implementing a frontend or a plugin, the JSON codec used by pop-launcher is line-based. Every line will contain a single JSON message That will be serialized or decoded as a `Request`, `PluginResponse`, or `Response`. These types can be referenced in [docs.rs](https://docs.rs/pop-launcher). IPC is based on standard input/output streams, so you should take care not to write logs to stdout.
+Whether implementing a frontend or a plugin, the JSON codec used by soryos-launcher is line-based. Every line will contain a single JSON message That will be serialized or decoded as a `Request`, `PluginResponse`, or `Response`. These types can be referenced in [docs.rs](https://docs.rs/soryos-launcher). IPC is based on standard input/output streams, so you should take care not to write logs to stdout.
 
 ### Frontend JSON IPC
 
-The frontend will send `Request`s to the pop-launcher service through the stdin pipe. The stdout pipe will respond with `Response`s. It is ideal to design your frontend to accept responses asynchronously. Sending `Interrupt` or `Search` will cancel any active searches being performed, if the plugins that are still actively searching support cancellation.
+The frontend will send `Request`s to the soryos-launcher service through the stdin pipe. The stdout pipe will respond with `Response`s. It is ideal to design your frontend to accept responses asynchronously. Sending `Interrupt` or `Search` will cancel any active searches being performed, if the plugins that are still actively searching support cancellation.
 
 ### Plugin JSON IPC
 
-Plugins will receive `Request`s from pop-launcher through their stdin pipe. They should respond with `PluginResponse` messages.
+Plugins will receive `Request`s from soryos-launcher through their stdin pipe. They should respond with `PluginResponse` messages.
 
 ### Request
 
-If you are writing a frontend, you are sending these events to the pop-launcher stdin pipe. If you are writing a plugin, the plugin will be receiving these events from its stdin.
+If you are writing a frontend, you are sending these events to the soryos-launcher stdin pipe. If you are writing a plugin, the plugin will be receiving these events from its stdin.
 
 ```rust
 pub enum Request {

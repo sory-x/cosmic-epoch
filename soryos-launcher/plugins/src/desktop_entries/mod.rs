@@ -6,7 +6,7 @@ use crate::*;
 use freedesktop_desktop_entry as fde;
 use freedesktop_desktop_entry::DesktopEntry;
 use futures::StreamExt;
-use pop_launcher::*;
+use soryos_launcher::*;
 use std::borrow::Cow;
 use tokio::io::AsyncWrite;
 use utils::{get_description, is_session_cosmic};

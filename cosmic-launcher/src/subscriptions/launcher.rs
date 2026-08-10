@@ -2,7 +2,7 @@ use cosmic::iced::futures::StreamExt;
 use cosmic::iced::runtime::futures::MaybeSend;
 use cosmic::iced::{Subscription, stream};
 use futures::{SinkExt, Stream};
-use pop_launcher_service::{Args, IpcClient};
+use soryos_launcher_service::{Args, IpcClient};
 use std::hash::Hash;
 use tokio::sync::{mpsc, oneshot};
 
@@ -20,7 +20,7 @@ pub enum Request {
 #[derive(Debug, Clone)]
 pub enum Event {
     Started(mpsc::Sender<Request>),
-    Response(pop_launcher::Response),
+    Response(soryos_launcher::Response),
     ServiceIsClosed,
 }
 
@@ -32,7 +32,7 @@ pub fn subscription<I: 'static + Hash + Copy + Send + Sync>(
             1,
             |mut output: futures::channel::mpsc::Sender<Event>| async move {
                 loop {
-                    tracing::info!("starting pop-launcher service");
+                    tracing::info!("starting soryos-launcher service");
                     let mut responses = std::pin::pin!(service());
                     while let Some(message) = responses.next().await {
                         let _res = output.send(message).await;
@@ -43,13 +43,13 @@ pub fn subscription<I: 'static + Hash + Copy + Send + Sync>(
     })
 }
 
-/// Initializes pop-launcher if it is not running, and returns a handle to its client.
+/// Initializes soryos-launcher if it is not running, and returns a handle to its client.
 fn client_request<'a>(
     tx: &mpsc::Sender<Event>,
     client: &'a mut Option<(IpcClient, oneshot::Sender<()>)>,
 ) -> &'a mut Option<(IpcClient, oneshot::Sender<()>)> {
     if client.is_none() {
-        *client = match pop_launcher_service::IpcClient::new_with_args(Args {
+        *client = match soryos_launcher_service::IpcClient::new_with_args(Args {
             max_files: 20,
             max_open: 99,
             max_search: 20,
@@ -59,7 +59,7 @@ fn client_request<'a>(
 
                 let (kill_tx, kill_rx) = tokio::sync::oneshot::channel();
                 let listener = async {
-                    tracing::info!("starting pop-launcher instance");
+                    tracing::info!("starting soryos-launcher instance");
                     let listener = Box::pin(async move {
                         let mut responses = std::pin::pin!(responses);
                         while let Some(response) = responses.next().await {
@@ -77,7 +77,7 @@ fn client_request<'a>(
 
                 #[cfg(feature = "console")]
                 let _res = tokio::task::Builder::new()
-                    .name("pop-launcher listener")
+                    .name("soryos-launcher listener")
                     .spawn(listener);
 
                 #[cfg(not(feature = "console"))]
@@ -86,7 +86,7 @@ fn client_request<'a>(
                 Some((new_client, kill_tx))
             }
             Err(why) => {
-                tracing::error!("pop-launcher failed to start: {}", why);
+                tracing::error!("soryos-launcher failed to start: {}", why);
                 None
             }
         }
@@ -108,34 +108,34 @@ pub fn service() -> impl Stream<Item = Event> + MaybeSend {
             match request {
                 Request::Search(s) => {
                     if let Some((client, _)) = client_request(&responses_tx, client) {
-                        let _res = client.send(pop_launcher::Request::Search(s)).await;
+                        let _res = client.send(soryos_launcher::Request::Search(s)).await;
                     }
                 }
                 Request::Activate(i) => {
                     if let Some((client, _)) = client_request(&responses_tx, client) {
-                        let _res = client.send(pop_launcher::Request::Activate(i)).await;
+                        let _res = client.send(soryos_launcher::Request::Activate(i)).await;
                     }
                 }
                 Request::Context(i) => {
                     if let Some((client, _)) = client_request(&responses_tx, client) {
-                        let _res = client.send(pop_launcher::Request::Context(i)).await;
+                        let _res = client.send(soryos_launcher::Request::Context(i)).await;
                     }
                 }
                 Request::ActivateContext(id, context) => {
                     if let Some((client, _)) = client_request(&responses_tx, client) {
                         let _res = client
-                            .send(pop_launcher::Request::ActivateContext { id, context })
+                            .send(soryos_launcher::Request::ActivateContext { id, context })
                             .await;
                     }
                 }
                 Request::Close => {
                     if let Some((client, _)) = client_request(&responses_tx, client) {
-                        let _res = client.send(pop_launcher::Request::Close).await;
+                        let _res = client.send(soryos_launcher::Request::Close).await;
                     }
                 }
                 Request::Complete(id) => {
                     if let Some((client, _)) = client_request(&responses_tx, client) {
-                        let _res = client.send(pop_launcher::Request::Complete(id)).await;
+                        let _res = client.send(soryos_launcher::Request::Complete(id)).await;
                     }
                 }
                 Request::ServiceIsClosed => {
@@ -147,7 +147,7 @@ pub fn service() -> impl Stream<Item = Event> + MaybeSend {
 
     #[cfg(feature = "console")]
     let _res = tokio::task::Builder::new()
-        .name("pop-launcher forwarder")
+        .name("soryos-launcher forwarder")
         .spawn(service_future);
 
     #[cfg(not(feature = "console"))]

@@ -2,7 +2,7 @@
 // Copyright © 2021 System76
 
 use futures::prelude::*;
-use pop_launcher::*;
+use soryos_launcher::*;
 use recently_used_xbel::{RecentlyUsed, parse_file};
 use slab::Slab;
 use std::borrow::Cow;

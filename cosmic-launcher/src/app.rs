@@ -46,7 +46,7 @@ use cosmic::widget::{autosize, button, divider, icon, id_container, mouse_area, 
 use cosmic::{Element, keyboard_nav, surface};
 use iced::keyboard::{Key, Modifiers};
 use iced::{Alignment, Color};
-use pop_launcher::{ContextOption, GpuPreference, IconSource, SearchResult};
+use soryos_launcher::{ContextOption, GpuPreference, IconSource, SearchResult};
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, VecDeque};
 use std::fmt::Display;
@@ -532,11 +532,11 @@ impl cosmic::Application for CosmicLauncher {
                     self.request(launcher::Request::ServiceIsClosed);
                 }
                 launcher::Event::Response(response) => match response {
-                    pop_launcher::Response::Close => {
+                    soryos_launcher::Response::Close => {
                         return self.hide();
                     }
                     #[allow(clippy::cast_possible_truncation)]
-                    pop_launcher::Response::Context { id, options } => {
+                    soryos_launcher::Response::Context { id, options } => {
                         if options.is_empty() {
                             return Task::none();
                         }
@@ -570,7 +570,7 @@ impl cosmic::Application for CosmicLauncher {
                                     input_zone: None,
                                 });
                     }
-                    pop_launcher::Response::DesktopEntry {
+                    soryos_launcher::Response::DesktopEntry {
                         path,
                         gpu_preference,
                         action_name,
@@ -604,7 +604,7 @@ impl cosmic::Application for CosmicLauncher {
                             });
                         }
                     }
-                    pop_launcher::Response::Update(mut list) => {
+                    soryos_launcher::Response::Update(mut list) => {
                         if self.alt_tab && list.is_empty() {
                             return self.hide();
                         }
@@ -684,7 +684,7 @@ impl cosmic::Application for CosmicLauncher {
                         }
                         return Task::batch(cmds);
                     }
-                    pop_launcher::Response::Fill(s) => {
+                    soryos_launcher::Response::Fill(s) => {
                         self.input_value = s;
                         self.request(launcher::Request::Search(self.input_value.clone()));
                     }

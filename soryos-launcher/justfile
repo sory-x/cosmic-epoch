@@ -1,4 +1,4 @@
-ID := 'pop-launcher'
+ID := 'soryos-launcher'
 plugins := 'calc desktop_entries files find pop_shell pulse recent scripts terminal web cosmic_toplevel'
 
 rootdir := ''
@@ -27,12 +27,12 @@ plugin-dir := launcher-dir / 'plugins/'
 
 version := '0.0.0'
 
-# Compile pop-launcher
+# Compile soryos-launcher
 all *args: (build-release args)
 
 # Compile with debug profile
 build-debug *args:
-    cargo build -p pop-launcher-bin {{args}}
+    cargo build -p soryos-launcher-bin {{args}}
 
 # Compile with release profile
 build-release *args: (build-debug '--release' args)
@@ -58,11 +58,11 @@ clean-dist:
 # Install everything
 install: install-bin install-plugins install-scripts
 
-# Install pop-launcher binary
+# Install soryos-launcher binary
 install-bin:
-    install -Dm0755 {{target-dir}}/pop-launcher-bin {{bin-path}}
+    install -Dm0755 {{target-dir}}/soryos-launcher-bin {{bin-path}}
 
-# Install pop-launcher plugins
+# Install soryos-launcher plugins
 install-plugins:
     #!/usr/bin/env sh
     set -ex
@@ -73,7 +73,7 @@ install-plugins:
         ln -srf {{bin-path}} {{plugin-dir}}${plugin}/$(echo ${plugin} | sed 's/_/-/')
     done
 
-# Install pop-launcher scripts
+# Install soryos-launcher scripts
 install-scripts:
     #!/usr/bin/env sh
     set -ex

@@ -34,7 +34,7 @@ pub struct Config {
 pub fn load() -> Config {
     let mut config = Config::default();
 
-    for path in pop_launcher::config::find("pop_shell") {
+    for path in soryos_launcher::config::find("pop_shell") {
         let string = match std::fs::read_to_string(&path) {
             Ok(string) => string,
             Err(why) => {

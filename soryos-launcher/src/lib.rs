@@ -13,13 +13,13 @@ use std::{
     path::{Path, PathBuf},
 };
 
-pub const LOCAL: &str = "~/.local/share/pop-launcher";
+pub const LOCAL: &str = "~/.local/share/soryos-launcher";
 pub const LOCAL_PLUGINS: &str = concatcp!(LOCAL, "/plugins");
 
-pub const SYSTEM: &str = "/etc/pop-launcher";
+pub const SYSTEM: &str = "/etc/soryos-launcher";
 pub const SYSTEM_PLUGINS: &str = concatcp!(SYSTEM, "/plugins");
 
-pub const DISTRIBUTION: &str = "/usr/lib/pop-launcher";
+pub const DISTRIBUTION: &str = "/usr/lib/soryos-launcher";
 pub const DISTRIBUTION_PLUGINS: &str = concatcp!(DISTRIBUTION, "/plugins");
 
 pub const PLUGIN_PATHS: &[&str] = &[LOCAL_PLUGINS, SYSTEM_PLUGINS, DISTRIBUTION_PLUGINS];

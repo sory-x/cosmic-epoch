@@ -1597,7 +1597,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "pop-launcher"
+name = "soryos-launcher"
 version = "1.2.7"
 dependencies = [
  "const_format",
@@ -1611,12 +1611,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "pop-launcher-bin"
+name = "soryos-launcher-bin"
 version = "1.2.7"
 dependencies = [
  "dirs 6.0.0",
  "mimalloc",
- "pop-launcher-toolkit",
+ "soryos-launcher-toolkit",
  "tokio",
  "tracing",
  "tracing-journald",
@@ -1624,7 +1624,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "pop-launcher-plugins"
+name = "soryos-launcher-plugins"
 version = "1.2.4"
 dependencies = [
  "anyhow",
@@ -1639,7 +1639,7 @@ dependencies = [
  "human-sort",
  "human_format",
  "new_mime_guess",
- "pop-launcher",
+ "soryos-launcher",
  "recently-used-xbel",
  "regex",
  "reqwest",
@@ -1659,7 +1659,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "pop-launcher-service"
+name = "soryos-launcher-service"
 version = "1.2.7"
 dependencies = [
  "async-oneshot",
@@ -1670,7 +1670,7 @@ dependencies = [
  "futures",
  "gen-z",
  "num_cpus",
- "pop-launcher",
+ "soryos-launcher",
  "regex",
  "ron",
  "serde",
@@ -1684,16 +1684,16 @@ dependencies = [
 ]
 
 [[package]]
-name = "pop-launcher-toolkit"
+name = "soryos-launcher-toolkit"
 version = "1.2.7"
 dependencies = [
  "async-trait",
  "dirs 6.0.0",
  "fork",
  "futures",
- "pop-launcher",
- "pop-launcher-plugins",
- "pop-launcher-service",
+ "soryos-launcher",
+ "soryos-launcher-plugins",
+ "soryos-launcher-service",
  "tokio",
  "tracing",
  "tracing-subscriber",

@@ -1,15 +1,15 @@
 [package]
-name = "pop-launcher-toolkit"
+name = "soryos-launcher-toolkit"
 version = "1.2.7"
-description = "A wrapper around pop-launcher, pop-launcher-service and pop-launcher-plugins types for writing plugins and frontends for pop-launcher."
+description = "A wrapper around soryos-launcher, soryos-launcher-service and soryos-launcher-plugins types for writing plugins and frontends for soryos-launcher."
 edition = { workspace = true }
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-pop-launcher-plugins = { path = "../plugins" }
-pop-launcher-service = { path = "../service" }
-pop-launcher = { path = "../" }
+soryos-launcher-plugins = { path = "../plugins" }
+soryos-launcher-service = { path = "../service" }
+soryos-launcher = { path = "../" }
 async-trait = "0.1.89"
 tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.20", default-features = false, features = [

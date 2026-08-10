@@ -2,25 +2,25 @@
 // SPDX-License-Identifier: MPL-2.0
 
 use futures::StreamExt;
-use pop_launcher::{Indice, PluginResponse, Request, async_stdin, async_stdout, json_input_stream};
+use soryos_launcher::{Indice, PluginResponse, Request, async_stdin, async_stdout, json_input_stream};
 
 pub use async_trait::async_trait;
-use pop_launcher_plugins as plugins;
+use soryos_launcher_plugins as plugins;
 
 /// Re-export of the tracing crate, use this to add custom logs to your plugin
 pub use tracing;
 
-/// A helper trait to create `pop-launcher` plugins.
+/// A helper trait to create `soryos-launcher` plugins.
 #[async_trait]
 pub trait PluginExt
 where
     Self: Sized + Send,
 {
     /// The name of our plugin, currently this is used internally to create the plugin log file at
-    /// `$XDG_STATE_HOME/pop-launcher/{name}.log`
+    /// `$XDG_STATE_HOME/soryos-launcher/{name}.log`
     fn name(&self) -> &str;
 
-    /// Handle a [`Request::Search`] issued by `pop-launcher`.
+    /// Handle a [`Request::Search`] issued by `soryos-launcher`.
     /// To send search result back use [`PluginResponse::Append`].
     /// Once finished [`PluginResponse::Finished`] is expected to notify the search result are ready to be displayed.
     async fn search(&mut self, query: &str);
@@ -38,17 +38,17 @@ where
     /// Handle an autocompletion request from the client
     async fn complete(&mut self, _id: Indice) {}
 
-    /// `pop-launcher` request the context for the given [`SearchResult`] id.
+    /// `soryos-launcher` request the context for the given [`SearchResult`] id.
     /// to send the requested context use [`PluginResponse::Context`]
     ///
-    /// [`SearchResult`]: pop_launcher::SearchResult
+    /// [`SearchResult`]: soryos_launcher::SearchResult
     async fn context(&mut self, _id: Indice) {}
 
-    /// This is automatically called after `pop-launcher` requests the plugin to exit.
+    /// This is automatically called after `soryos-launcher` requests the plugin to exit.
     /// Use this only if your plugin does not need to perform specific clean ups.
     fn exit(&mut self) {}
 
-    /// Whenever a new search query is issued, `pop-launcher` will send a [`Request::Interrupt`]
+    /// Whenever a new search query is issued, `soryos-launcher` will send a [`Request::Interrupt`]
     /// so we can stop any ongoing computation before handling the next query.
     /// This is especially useful for plugins that rely on external services
     /// to get their search results (a HTTP endpoint for instance)
@@ -57,7 +57,7 @@ where
     /// The launcher is asking us to quit a specific item.
     async fn quit(&mut self, _id: Indice) {}
 
-    /// A helper function to send [`PluginResponse`] back to `pop-launcher`
+    /// A helper function to send [`PluginResponse`] back to `soryos-launcher`
     async fn respond_with(&self, response: PluginResponse) {
         plugins::send(&mut async_stdout(), response).await
     }
@@ -103,10 +103,10 @@ where
 
     fn init_logging(&self) {
         let logdir = match dirs::state_dir() {
-            Some(dir) => dir.join("pop-launcher/"),
+            Some(dir) => dir.join("soryos-launcher/"),
             None => dirs::home_dir()
                 .expect("home directory required")
-                .join(".cache/pop-launcher"),
+                .join(".cache/soryos-launcher"),
         };
 
         let _ = std::fs::create_dir_all(&logdir);
