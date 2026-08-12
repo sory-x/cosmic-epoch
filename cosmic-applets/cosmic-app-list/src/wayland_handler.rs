@@ -493,7 +493,13 @@ impl AppData {
         };
         std::thread::spawn(move || {
             let name = c"app-list-screencopy";
+            #[cfg(target_os = "linux")]
             let Ok(fd) = rustix::fs::memfd_create(name, rustix::fs::MemfdFlags::CLOEXEC) else {
+                tracing::error!("Failed to get fd for capture");
+                return;
+            };
+            #[cfg(target_os = "redox")]
+            let Ok(fd) = capture_shm_fd() else {
                 tracing::error!("Failed to get fd for capture");
                 return;
             };
@@ -724,3 +730,29 @@ cctk::delegate_screencopy!(AppData);
 sctk::delegate_activation!(AppData, ExecRequestData);
 
 sctk::delegate_output!(AppData);
+
+#[cfg(target_os = "redox")]
+fn capture_shm_fd() -> std::io::Result<rustix::fd::OwnedFd> {
+    use std::io::ErrorKind;
+    let dir = std::env::temp_dir();
+    for i in 0..16 {
+        let path = dir.join(format!("app-list-screencopy-{}-{i}", std::process::id()));
+        match std::fs::OpenOptions::new()
+            .read(true)
+            .write(true)
+            .create_new(true)
+            .open(&path)
+        {
+            Ok(file) => {
+                let _ = std::fs::remove_file(&path);
+                return Ok(rustix::fd::OwnedFd::from(file));
+            }
+            Err(e) if e.kind() == ErrorKind::AlreadyExists => continue,
+            Err(e) => return Err(e),
+        }
+    }
+    Err(std::io::Error::new(
+        ErrorKind::AlreadyExists,
+        "failed to create a capture shm file",
+    ))
+}

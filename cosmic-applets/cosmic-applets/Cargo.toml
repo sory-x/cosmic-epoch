@@ -12,7 +12,6 @@ cosmic-app-list = { path = "../cosmic-app-list" }
 cosmic-applet-audio = { path = "../cosmic-applet-audio" }
 cosmic-applet-a11y = { path = "../cosmic-applet-a11y" }
 cosmic-applet-battery = { path = "../cosmic-applet-battery" }
-cosmic-applet-bluetooth = { path = "../cosmic-applet-bluetooth" }
 cosmic-applet-minimize = { path = "../cosmic-applet-minimize" }
 cosmic-applet-network = { path = "../cosmic-applet-network" }
 cosmic-applet-notifications = { path = "../cosmic-applet-notifications" }
@@ -27,3 +26,6 @@ libcosmic = { workspace = true }
 tracing = { workspace = true }
 "tracing-subscriber" = { workspace = true }
 "tracing-log" = { workspace = true }
+
+[target.'cfg(not(target_os = "redox"))'.dependencies]
+cosmic-applet-bluetooth = { path = "../cosmic-applet-bluetooth" }
