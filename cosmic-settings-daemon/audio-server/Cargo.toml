@@ -14,13 +14,15 @@ numtoa = "1.0.0-alpha1"
 cosmic-settings-daemon-config = { path = "../cosmic-settings-daemon-config", features = [
     "greeter",
 ] }
-cosmic-pipewire = { path = "../cosmic-pipewire" }
 cosmic-settings-audio-core = { path = "../audio-core" }
 serde = { version = "1.0.228", features = ["derive"] }
 tokio-util = { version = "0.7.18", features = ["codec"] }
 futures-util = { version = "0.3.32", features = ["sink"] }
 tokio = { version = "1.47.1", features = ["fs", "macros", "process", "rt", "time"] }
 dirs = "6.0.0"
+
+[target.'cfg(not(target_os = "redox"))'.dependencies]
+cosmic-pipewire = { path = "../cosmic-pipewire" }
 
 [dev-dependencies]
 zlink = { workspace = true, features = ["tokio", "tracing"] }

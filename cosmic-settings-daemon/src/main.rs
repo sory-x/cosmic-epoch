@@ -716,23 +716,26 @@ async fn main() -> ExitCode {
                                     log::error!("Failed to send xkb layout update: {err:?}");
                                 }
                             } else if id.as_str() == cosmic_settings_daemon_config::NAME {
-                                let mut daemon = varlink_daemon_context.lock().await;
+                                #[cfg(not(target_os = "redox"))]
+                                {
+                                    let mut daemon = varlink_daemon_context.lock().await;
 
-                                let mono_sound = daemon
-                                    .audio_server
-                                    .backend
-                                    .model
-                                    .lock()
-                                    .await
-                                    .daemon_config_context
-                                    .get::<bool>("mono_sound");
+                                    let mono_sound = daemon
+                                        .audio_server
+                                        .backend
+                                        .model
+                                        .lock()
+                                        .await
+                                        .daemon_config_context
+                                        .get::<bool>("mono_sound");
 
-                                match mono_sound {
-                                    Ok(enabled) => {
-                                        _ = daemon.audio_server.set_mono(enabled).await;
-                                    }
-                                    Err(_) => {
-                                        tracing::warn!("failed to update settings daemon config");
+                                    match mono_sound {
+                                        Ok(enabled) => {
+                                            _ = daemon.audio_server.set_mono(enabled).await;
+                                        }
+                                        Err(_) => {
+                                            tracing::warn!("failed to update settings daemon config");
+                                        }
                                     }
                                 }
                             }
