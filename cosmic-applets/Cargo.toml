@@ -77,6 +77,10 @@ iced_futures = { path = "../../libcosmic/iced/futures" }
 # libcosmic = { path = "../../libcosmic", branch = "theme-v2" }
 # iced_futures = { path = "../../libcosmic", branch = "theme-v2" }
 
+[patch."https://github.com/pop-os/winit.git"]
+winit = { git = "https://gitlab.com/sory-os/winit.git", branch = "redox-wayland-0.14" }
+winit-core = { git = "https://gitlab.com/sory-os/winit.git", branch = "redox-wayland-0.14" }
+
 # [patch.'https://github.com/pop-os/dbus-settings-bindings']
 # cosmic-dbus-networkmanager = { path = "../dbus-settings-bindings/networkmanager" }
 # upower_dbus = { path = "../dbus-settings-bindings/upower" }

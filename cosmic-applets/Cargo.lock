@@ -1945,7 +1945,7 @@ checksum = "75b325c5dbd37f80359721ad39aca5a29fb04c89279657cffdda8736d0c0b9d2"
 [[package]]
 name = "dpi"
 version = "0.1.2"
-source = "git+https://github.com/pop-os/winit.git?tag=cosmic-0.14#71ce08c043814514a8fd92d9d0599f115ae854e8"
+source = "git+https://gitlab.com/sory-os/winit.git?branch=redox-wayland-0.14#535bd567deded85793fdc8172feacf18055170c8"
 
 [[package]]
 name = "drm"
@@ -7599,7 +7599,7 @@ checksum = "d6bbff5f0aada427a1e5a6da5f1f98158182f26556f345ac9e04d36d0ebed650"
 [[package]]
 name = "winit"
 version = "0.31.0-beta.2"
-source = "git+https://github.com/pop-os/winit.git?tag=cosmic-0.14#71ce08c043814514a8fd92d9d0599f115ae854e8"
+source = "git+https://gitlab.com/sory-os/winit.git?branch=redox-wayland-0.14#535bd567deded85793fdc8172feacf18055170c8"
 dependencies = [
  "bitflags 2.13.1",
  "cfg_aliases",
@@ -7625,7 +7625,7 @@ dependencies = [
 [[package]]
 name = "winit-android"
 version = "0.31.0-beta.2"
-source = "git+https://github.com/pop-os/winit.git?tag=cosmic-0.14#71ce08c043814514a8fd92d9d0599f115ae854e8"
+source = "git+https://gitlab.com/sory-os/winit.git?branch=redox-wayland-0.14#535bd567deded85793fdc8172feacf18055170c8"
 dependencies = [
  "android-activity",
  "bitflags 2.13.1",
@@ -7640,7 +7640,7 @@ dependencies = [
 [[package]]
 name = "winit-appkit"
 version = "0.31.0-beta.2"
-source = "git+https://github.com/pop-os/winit.git?tag=cosmic-0.14#71ce08c043814514a8fd92d9d0599f115ae854e8"
+source = "git+https://gitlab.com/sory-os/winit.git?branch=redox-wayland-0.14#535bd567deded85793fdc8172feacf18055170c8"
 dependencies = [
  "bitflags 2.13.1",
  "block2 0.6.2",
@@ -7662,7 +7662,7 @@ dependencies = [
 [[package]]
 name = "winit-common"
 version = "0.31.0-beta.2"
-source = "git+https://github.com/pop-os/winit.git?tag=cosmic-0.14#71ce08c043814514a8fd92d9d0599f115ae854e8"
+source = "git+https://gitlab.com/sory-os/winit.git?branch=redox-wayland-0.14#535bd567deded85793fdc8172feacf18055170c8"
 dependencies = [
  "memmap2 0.9.11",
  "objc2 0.6.4",
@@ -7677,7 +7677,7 @@ dependencies = [
 [[package]]
 name = "winit-core"
 version = "0.31.0-beta.2"
-source = "git+https://github.com/pop-os/winit.git?tag=cosmic-0.14#71ce08c043814514a8fd92d9d0599f115ae854e8"
+source = "git+https://gitlab.com/sory-os/winit.git?branch=redox-wayland-0.14#535bd567deded85793fdc8172feacf18055170c8"
 dependencies = [
  "bitflags 2.13.1",
  "cursor-icon",
@@ -7691,7 +7691,7 @@ dependencies = [
 [[package]]
 name = "winit-orbital"
 version = "0.31.0-beta.2"
-source = "git+https://github.com/pop-os/winit.git?tag=cosmic-0.14#71ce08c043814514a8fd92d9d0599f115ae854e8"
+source = "git+https://gitlab.com/sory-os/winit.git?branch=redox-wayland-0.14#535bd567deded85793fdc8172feacf18055170c8"
 dependencies = [
  "bitflags 2.13.1",
  "dpi",
@@ -7707,7 +7707,7 @@ dependencies = [
 [[package]]
 name = "winit-uikit"
 version = "0.31.0-beta.2"
-source = "git+https://github.com/pop-os/winit.git?tag=cosmic-0.14#71ce08c043814514a8fd92d9d0599f115ae854e8"
+source = "git+https://gitlab.com/sory-os/winit.git?branch=redox-wayland-0.14#535bd567deded85793fdc8172feacf18055170c8"
 dependencies = [
  "bitflags 2.13.1",
  "block2 0.6.2",
@@ -7727,7 +7727,7 @@ dependencies = [
 [[package]]
 name = "winit-wayland"
 version = "0.31.0-beta.2"
-source = "git+https://github.com/pop-os/winit.git?tag=cosmic-0.14#71ce08c043814514a8fd92d9d0599f115ae854e8"
+source = "git+https://gitlab.com/sory-os/winit.git?branch=redox-wayland-0.14#535bd567deded85793fdc8172feacf18055170c8"
 dependencies = [
  "ahash",
  "bitflags 2.13.1",
@@ -7753,7 +7753,7 @@ dependencies = [
 [[package]]
 name = "winit-web"
 version = "0.31.0-beta.2"
-source = "git+https://github.com/pop-os/winit.git?tag=cosmic-0.14#71ce08c043814514a8fd92d9d0599f115ae854e8"
+source = "git+https://gitlab.com/sory-os/winit.git?branch=redox-wayland-0.14#535bd567deded85793fdc8172feacf18055170c8"
 dependencies = [
  "atomic-waker",
  "bitflags 2.13.1",
@@ -7775,7 +7775,7 @@ dependencies = [
 [[package]]
 name = "winit-win32"
 version = "0.31.0-beta.2"
-source = "git+https://github.com/pop-os/winit.git?tag=cosmic-0.14#71ce08c043814514a8fd92d9d0599f115ae854e8"
+source = "git+https://gitlab.com/sory-os/winit.git?branch=redox-wayland-0.14#535bd567deded85793fdc8172feacf18055170c8"
 dependencies = [
  "bitflags 2.13.1",
  "cursor-icon",
@@ -7791,7 +7791,7 @@ dependencies = [
 [[package]]
 name = "winit-x11"
 version = "0.31.0-beta.2"
-source = "git+https://github.com/pop-os/winit.git?tag=cosmic-0.14#71ce08c043814514a8fd92d9d0599f115ae854e8"
+source = "git+https://gitlab.com/sory-os/winit.git?branch=redox-wayland-0.14#535bd567deded85793fdc8172feacf18055170c8"
 dependencies = [
  "bitflags 2.13.1",
  "bytemuck",

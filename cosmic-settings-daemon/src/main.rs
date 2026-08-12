@@ -338,12 +338,14 @@ impl SettingsDaemon {
     }
 }
 
+#[cfg(not(target_os = "redox"))]
 fn backlight_enumerate() -> io::Result<Vec<udev::Device>> {
     let mut enumerator = udev::Enumerator::new()?;
     enumerator.match_subsystem("backlight")?;
     Ok(enumerator.scan_devices()?.collect())
 }
 
+#[cfg(not(target_os = "redox"))]
 fn backlight_monitor() -> io::Result<AsyncFd<udev::MonitorSocket>> {
     let socket = udev::MonitorBuilder::new()?
         .match_subsystem("backlight")?
@@ -352,6 +354,7 @@ fn backlight_monitor() -> io::Result<AsyncFd<udev::MonitorSocket>> {
 }
 
 // Choose backlight with most "precision". This is what `light` does.
+#[cfg(not(target_os = "redox"))]
 async fn choose_best_backlight(udev_devices: &HashMap<PathBuf, udev::Device>) -> BrightnessDevice {
     let mut best_backlight = None;
     let mut best_max_brightness = 0;
@@ -372,6 +375,7 @@ async fn choose_best_backlight(udev_devices: &HashMap<PathBuf, udev::Device>) ->
     best_backlight.unwrap_or_else(BrightnessDevice::external)
 }
 
+#[cfg(not(target_os = "redox"))]
 async fn backlight_monitor_task(
     mut backlights: HashMap<PathBuf, udev::Device>,
     connection: zbus::Connection,
@@ -498,6 +502,7 @@ async fn main() -> ExitCode {
                     .await;
             });
 
+            #[cfg(not(target_os = "redox"))]
             let backlights = match backlight_enumerate() {
                 Ok(backlights) => backlights,
                 Err(err) => {
@@ -505,11 +510,15 @@ async fn main() -> ExitCode {
                     Vec::new()
                 }
             };
+            #[cfg(not(target_os = "redox"))]
             let backlights: HashMap<_, _> = backlights
                 .into_iter()
                 .map(|i| (i.syspath().to_owned(), i))
                 .collect();
+            #[cfg(not(target_os = "redox"))]
             let display_brightness_device = choose_best_backlight(&backlights).await;
+            #[cfg(target_os = "redox")]
+            let display_brightness_device = BrightnessDevice::external();
 
             let logind_session = async {
                 let connection = zbus::Connection::system().await?;
@@ -623,6 +632,7 @@ async fn main() -> ExitCode {
                 .await?;
 
             let conn_clone = connection.clone();
+            #[cfg(not(target_os = "redox"))]
             task::spawn_local(async move {
                 backlight_monitor_task(backlights, conn_clone).await;
             });

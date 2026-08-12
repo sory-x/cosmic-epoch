@@ -4,6 +4,7 @@
 mod app;
 mod backend;
 mod config;
+#[cfg(not(target_os = "redox"))]
 mod dgpu;
 mod localize;
 

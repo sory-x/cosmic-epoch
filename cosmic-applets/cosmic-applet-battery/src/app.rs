@@ -7,9 +7,10 @@ use crate::{
         power_profile_subscription, set_charging_limit, unset_charging_limit,
     },
     config,
-    dgpu::{Entry, GpuUpdate, dgpu_subscription},
     fl,
 };
+#[cfg(not(target_os = "redox"))]
+use crate::dgpu::{Entry, GpuUpdate, dgpu_subscription};
 use cosmic::{
     Element, Task, app,
     applet::{
@@ -63,6 +64,7 @@ pub fn run() -> cosmic::iced::Result {
     cosmic::applet::run::<CosmicBatteryApplet>(())
 }
 
+#[cfg(not(target_os = "redox"))]
 #[derive(Clone, Default)]
 struct GPUData {
     name: String,
@@ -80,7 +82,9 @@ struct CosmicBatteryApplet {
     battery_percent: f64,
     no_battery: bool,
     on_battery: bool,
+    #[cfg(not(target_os = "redox"))]
     gpus: FxHashMap<PathBuf, GPUData>,
+    #[cfg(not(target_os = "redox"))]
     update_trigger: Option<UnboundedSender<()>>,
     time_remaining: Duration,
     max_kbd_brightness: Option<i32>,
@@ -199,9 +203,13 @@ enum Message {
     SetChargingLimit(bool),
     KeyboardBacklight(KeyboardBacklightUpdate),
     UpowerDevice(DeviceDbusEvent),
+    #[cfg(not(target_os = "redox"))]
     GpuInit(UnboundedSender<()>),
+    #[cfg(not(target_os = "redox"))]
     GpuOn(PathBuf, String, Option<Vec<Entry>>),
+    #[cfg(not(target_os = "redox"))]
     GpuOff(PathBuf),
+    #[cfg(not(target_os = "redox"))]
     ToggleGpuApps(PathBuf),
     Errored(String),
     InitProfile(UnboundedSender<PowerProfileRequest>, Power),
@@ -368,6 +376,7 @@ impl cosmic::Application for CosmicBatteryApplet {
                     if let Some(tx) = self.power_profile_sender.as_ref() {
                         let _ = tx.send(PowerProfileRequest::Get);
                     }
+                    #[cfg(not(target_os = "redox"))]
                     if let Some(tx) = self.update_trigger.as_ref() {
                         let _ = tx.send(());
                     }
@@ -483,9 +492,11 @@ impl cosmic::Application for CosmicBatteryApplet {
                     tokio::spawn(cosmic::process::spawn(cmd));
                 }
             },
+            #[cfg(not(target_os = "redox"))]
             Message::GpuInit(tx) => {
                 self.update_trigger = Some(tx);
             }
+            #[cfg(not(target_os = "redox"))]
             Message::GpuOn(path, name, app_list) => {
                 let toggled = self.gpus.get(&path).is_some_and(|data| data.toggled);
                 self.gpus.insert(
@@ -497,9 +508,11 @@ impl cosmic::Application for CosmicBatteryApplet {
                     },
                 );
             }
+            #[cfg(not(target_os = "redox"))]
             Message::GpuOff(path) => {
                 self.gpus.remove(&path);
             }
+            #[cfg(not(target_os = "redox"))]
             Message::ToggleGpuApps(path) => {
                 if let Some(data) = self.gpus.get_mut(&path) {
                     data.toggled = !data.toggled;
@@ -598,6 +611,7 @@ impl cosmic::Application for CosmicBatteryApplet {
             .padding([vertical_padding, horizontal_padding])
             .into();
 
+        #[cfg(not(target_os = "redox"))]
         let content = if self.gpus.is_empty() {
             btn
         } else {
@@ -635,6 +649,9 @@ impl cosmic::Application for CosmicBatteryApplet {
             ]
             .into()
         };
+
+        #[cfg(target_os = "redox")]
+        let content = btn;
 
         self.core.applet.autosize_window(content).into()
     }
@@ -833,6 +850,7 @@ impl cosmic::Application for CosmicBatteryApplet {
                 .into(),
         );
 
+        #[cfg(not(target_os = "redox"))]
         if !self.gpus.is_empty() {
             content.push(
                 padded_control(
@@ -875,6 +893,7 @@ impl cosmic::Application for CosmicBatteryApplet {
             );
         }
 
+        #[cfg(not(target_os = "redox"))]
         for (key, gpu) in &self.gpus {
             if gpu.app_list.is_none() {
                 continue;
@@ -971,6 +990,7 @@ impl cosmic::Application for CosmicBatteryApplet {
                 PowerProfileUpdate::Init(tx, p) => Message::InitProfile(p, tx),
                 PowerProfileUpdate::Error(e) => Message::Errored(e), // TODO: handle error
             }),
+            #[cfg(not(target_os = "redox"))]
             dgpu_subscription(0).map(|event| match event {
                 GpuUpdate::Init(tx) => Message::GpuInit(tx),
                 GpuUpdate::On(path, name, list) => Message::GpuOn(path, name, list),
